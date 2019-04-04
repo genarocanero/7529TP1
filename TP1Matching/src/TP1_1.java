@@ -13,7 +13,8 @@ public class TP1_1 {
     	
 //    	String direccionArchivo = args[2];
     	
-    	String direccionArchivo = "/7529TP1TDA/TP1Matching/testFiles/jugadores.txt";
+    	//prueba
+    	String direccionArchivo = "jugadores.txt";
     	
     	Cola<String[]> lineasDelArchivo = LectorCsv.leerArchivoCsv(direccionArchivo);
     	
