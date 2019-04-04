@@ -1,27 +1,51 @@
 package conteiner;
 
-import conteiner.Priorizable;
+import java.util.Map;
+import java.util.TreeMap;
 
-public class Preferencia<T> implements Priorizable {
+public class Preferencia<K,V>{
 	
-	private T preferencia;
-	private int prioridad;
-
-	public Preferencia(T nuevaPreferencia, int unaPrioridad) {
+	private Map<String,Integer> calificaciones;
+	private Cola<String>  jugadoresPreferidos;
+	
+	public Preferencia(){
 		
-		this.preferencia = nuevaPreferencia;
-		this.prioridad = unaPrioridad;
-	}
-
-	//@Override
-	public int getPrioridad() {
-		
-		return prioridad;
+		this.calificaciones = new TreeMap<String,Integer>();
+		this.jugadoresPreferidos = new Cola<String>();
 	}
 	
-	public T getPreferencia() {
+	public Integer getPreferencia(String jugadoPreferido) {
 		
-		return preferencia;
+		return (this.calificaciones.get(jugadoPreferido));
 	}
+	
+	public boolean quedanPreferencias() {
+		
+		return (!this.jugadoresPreferidos.vacia());
+	}
+	
+	public String mayorPreferenciaDisponible() {
+		
+		return (this.jugadoresPreferidos.desacolar());
+	}
+
+	public void cargarPreferencias(Cola<String[]> todasLasPreferencias) {
+		
+		MaxHeap<Jugador> maxHeap = new MaxHeap<Jugador>();
+		
+		while(!(todasLasPreferencias.vacia())) {
+			
+			String[] unaPreferencia = todasLasPreferencias.desacolar();
+			String nombre = unaPreferencia[0];
+			int prioridad = Integer.parseInt(unaPreferencia[1]);
+			
+			this.calificaciones.put(nombre,prioridad);
+			maxHeap.insertar(new Jugador(nombre, prioridad));
+		}
+		
+		this.jugadoresPreferidos.acolar(maxHeap.getElemento().getNombre());
+	}
+	
+
 
 }
