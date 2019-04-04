@@ -1,7 +1,4 @@
 Abril,8
 Camila,5
-Carlos,15
-Emilio,18
-Franco,13
 Miriam,11
 Rosario,1

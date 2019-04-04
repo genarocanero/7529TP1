@@ -1,7 +1,5 @@
-Abril,1
-Camila,3
 Carlos,8
 Emilio,9
 Franco,15
 Juan,11
-Miriam,20
+

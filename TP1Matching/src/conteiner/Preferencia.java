@@ -43,7 +43,10 @@ public class Preferencia<K,V>{
 			maxHeap.insertar(new Jugador(nombre, prioridad));
 		}
 		
-		this.jugadoresPreferidos.acolar(maxHeap.getElemento().getNombre());
+		while(!(maxHeap.estaVacio())){
+			
+			this.jugadoresPreferidos.acolar(maxHeap.getElemento().getNombre());
+		}
 	}
 	
 
