@@ -19,11 +19,12 @@ public class TP1_1 {
     	Cola<String[]> lineasDelArchivo = LectorCsv.leerArchivoCsv(direccionArchivo);
     	
     	ArrayList<String> oferentes;
-    	Map<String,Preferencia<String,Integer>> preferencias = new TreeMap<String,Preferencia<String,Integer>>();
+    	Map<String,Preferencia<String,Integer>> preferenciasOferentes = new TreeMap<String,Preferencia<String,Integer>>();
+    	Map<String,Preferencia<String,Integer>> preferenciasCandidatos = new TreeMap<String,Preferencia<String,Integer>>();
     	
-    	oferentes = cargarDatosJugadores(lineasDelArchivo, preferencias);
+    	oferentes = cargarDatosJugadores(lineasDelArchivo, preferenciasOferentes,preferenciasCandidatos);
     	
-        Map<String, String> matches = match(oferentes,preferencias);
+        Map<String, String> matches = match(oferentes,preferenciasOferentes,preferenciasCandidatos);
         
         for(Map.Entry<String, String> couple:matches.entrySet()){
             System.out.println(
@@ -47,7 +48,7 @@ public class TP1_1 {
     }
  
     private static ArrayList<String> cargarDatosJugadores(Cola<String[]> lineasDelArchivo,
-			Map<String, Preferencia<String, Integer>> preferencias) {
+			Map<String, Preferencia<String, Integer>> preferenciasOferentes, Map<String, Preferencia<String, Integer>> preferenciasCandidatos) {
     	
     	ArrayList<String> oferentes = new ArrayList<String>();
 		
@@ -61,9 +62,12 @@ public class TP1_1 {
     		
     		Preferencia<String,Integer> preferenciasDelJugador = setPreferencias(lineaActual[2]);
     		
-    		preferencias.put(nombreJugadorActual, preferenciasDelJugador);
-    		
-    		if(Integer.parseInt(lineaActual[0]) <= totalDeJugadores/2) oferentes.add(nombreJugadorActual);
+    		if(Integer.parseInt(lineaActual[0]) <= totalDeJugadores/2) {
+    			
+    			oferentes.add(nombreJugadorActual);
+    			preferenciasOferentes.put(nombreJugadorActual, preferenciasDelJugador);
+    		}
+    		else preferenciasCandidatos.put(nombreJugadorActual, preferenciasDelJugador);
     	}
     	
 		return oferentes;
@@ -80,7 +84,8 @@ public class TP1_1 {
 		return preferencias;
 	}
 
-	private static Map<String, String> match(ArrayList<String> oferentes,Map<String,Preferencia<String,Integer>> preferencias){
+	private static Map<String, String> match(ArrayList<String> oferentes,Map<String,Preferencia<String,Integer>> preferenciasOferentes,
+			Map<String,Preferencia<String,Integer>> preferenciasCandidatos){
       
 		Map<String, String> comprometidos = new TreeMap<String, String>();
 		ArrayList<String> oferentesLibres = new ArrayList<String>();
@@ -91,11 +96,11 @@ public class TP1_1 {
         	boolean seFormoPareja = false;
         	
         	String oferenteActual = oferentesLibres.remove(0); 
-            Preferencia<String,Integer> preferenciasOferente = preferencias.get(oferenteActual);
+            Preferencia<String,Integer> preferenciasOferenteActual = preferenciasOferentes.get(oferenteActual);
            
-            while(!seFormoPareja && preferenciasOferente.quedanPreferencias()){
+            while(!seFormoPareja && preferenciasOferenteActual.quedanPreferencias()){
             	
-            	String posiblePareja = preferenciasOferente.mayorPreferenciaDisponible();
+            	String posiblePareja = preferenciasOferenteActual.mayorPreferenciaDisponible();
             	String suPareja = comprometidos.get(posiblePareja);
             	
                 if(suPareja == null){
@@ -104,7 +109,7 @@ public class TP1_1 {
                 	seFormoPareja = true; 	
                 }
                 else{
-                	Preferencia<String,Integer> preferenciasPosiblePareja = preferencias.get(posiblePareja);
+                	Preferencia<String,Integer> preferenciasPosiblePareja = preferenciasCandidatos.get(posiblePareja);
                 	
                 	if(preferenciasPosiblePareja.getPreferencia(suPareja) < preferenciasPosiblePareja.getPreferencia(oferenteActual)){
                        
