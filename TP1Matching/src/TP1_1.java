@@ -12,10 +12,7 @@ public class TP1_1 {
 
     public static void main(String[] args){
     	
-//    	String direccionArchivo = args[2];
-    	
-    	//prueba
-    	String direccionArchivo = "jugadores.txt";
+    	String direccionArchivo = args[1];
     	
     	Cola<String[]> lineasDelArchivo = LectorCsv.leerArchivoCsv(direccionArchivo);
     	
@@ -28,7 +25,7 @@ public class TP1_1 {
     	
         Map<String, String> matches = match(oferentes,preferenciasOferentes,preferenciasCandidatos);
         
-        EscritorCsv.crearArchivoCsv(matches, oferentes, "parejas.txt");
+        EscritorCsv.crearArchivoCsv(matches, candidatos, "parejas.txt");
         
     }
  
