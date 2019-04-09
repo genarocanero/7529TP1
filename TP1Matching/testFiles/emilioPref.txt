@@ -1,4 +1,6 @@
 Abril,12
-Camila,14
-Miriam,2
-Rosario,3
+Lautaro,13
+Manuel,15
+Miriam,19
+Sabrina,20
+Ximena,5

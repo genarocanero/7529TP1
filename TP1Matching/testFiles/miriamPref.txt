@@ -1,4 +1,6 @@
-Carlos,3
-Emilio,2
-Franco,14
-Juan,18
+Camila,1
+Carlos,15
+Emilio,19
+Franco,20
+Juan,19
+Rosario,12
