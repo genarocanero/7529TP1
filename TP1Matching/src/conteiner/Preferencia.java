@@ -6,7 +6,7 @@ import java.util.TreeMap;
 public class Preferencia<K,V>{
 	
 	private Map<String,Integer> calificaciones;
-	private Cola<String>  jugadoresPreferidos;
+	private Cola<String> jugadoresPreferidos;
 	
 	public Preferencia(){
 		
@@ -21,7 +21,7 @@ public class Preferencia<K,V>{
 	
 	public boolean quedanPreferencias() {
 		
-		return (!this.jugadoresPreferidos.vacia());
+		return (!(this.jugadoresPreferidos.vacia()));
 	}
 	
 	public String mayorPreferenciaDisponible() {

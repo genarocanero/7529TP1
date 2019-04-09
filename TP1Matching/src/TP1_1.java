@@ -4,6 +4,7 @@ import java.util.TreeMap;
 
 import conteiner.Cola;
 import conteiner.Preferencia;
+import escrituraDeArchivos.EscritorCsv;
 import lecturaDeArchivos.LectorCsv;
 
 public class TP1_1 {
@@ -19,36 +20,20 @@ public class TP1_1 {
     	Cola<String[]> lineasDelArchivo = LectorCsv.leerArchivoCsv(direccionArchivo);
     	
     	ArrayList<String> oferentes;
+    	ArrayList<String> candidatos = new ArrayList<String>();
     	Map<String,Preferencia<String,Integer>> preferenciasOferentes = new TreeMap<String,Preferencia<String,Integer>>();
     	Map<String,Preferencia<String,Integer>> preferenciasCandidatos = new TreeMap<String,Preferencia<String,Integer>>();
     	
-    	oferentes = cargarDatosJugadores(lineasDelArchivo, preferenciasOferentes,preferenciasCandidatos);
+    	oferentes = cargarDatosJugadores(lineasDelArchivo, preferenciasOferentes,preferenciasCandidatos,candidatos);
     	
         Map<String, String> matches = match(oferentes,preferenciasOferentes,preferenciasCandidatos);
         
-        for(Map.Entry<String, String> couple:matches.entrySet()){
-            System.out.println(
-                    couple.getKey() + " is engaged to " + couple.getValue());
-        }
-//        if(checkMatches(guys, girls, matches, guyPrefers, girlPrefers)){
-//            System.out.println("Marriages are stable");
-//        }else{
-//            System.out.println("Marriages are unstable");
-//        }
-//        String tmp = matches.get(girls.get(0));
-//        matches.put(girls.get(0), matches.get(girls.get(1)));
-//        matches.put(girls.get(1), tmp);
-//        System.out.println(
-//                girls.get(0) +" and " + girls.get(1) + " have switched partners");
-//        if(checkMatches(guys, girls, matches, guyPrefers, girlPrefers)){
-//            System.out.println("Marriages are stable");
-//        }else{
-//            System.out.println("Marriages are unstable");
-//        }
+        EscritorCsv.crearArchivoCsv(matches, oferentes, "parejas.txt");
+        
     }
  
-    private static ArrayList<String> cargarDatosJugadores(Cola<String[]> lineasDelArchivo,
-			Map<String, Preferencia<String, Integer>> preferenciasOferentes, Map<String, Preferencia<String, Integer>> preferenciasCandidatos) {
+    private static ArrayList<String> cargarDatosJugadores(Cola<String[]> lineasDelArchivo,Map<String, Preferencia<String, Integer>> preferenciasOferentes,
+    		Map<String, Preferencia<String, Integer>> preferenciasCandidatos,ArrayList<String> candidatos) {
     	
     	ArrayList<String> oferentes = new ArrayList<String>();
 		
@@ -67,7 +52,10 @@ public class TP1_1 {
     			oferentes.add(nombreJugadorActual);
     			preferenciasOferentes.put(nombreJugadorActual, preferenciasDelJugador);
     		}
-    		else preferenciasCandidatos.put(nombreJugadorActual, preferenciasDelJugador);
+    		else{
+    			preferenciasCandidatos.put(nombreJugadorActual, preferenciasDelJugador);
+    			candidatos.add(nombreJugadorActual);
+    		}
     	}
     	
 		return oferentes;
@@ -123,7 +111,7 @@ public class TP1_1 {
         return comprometidos;
     }
  
-//    private static boolean checkMatches(List<String> guys, List<String> girls,
+//    private static boolean checkMatches(ArrayList<String> oferentes, List<String> girls,
 //            Map<String, String> matches, Map<String, List<String>> guyPrefers,
 //            Map<String, List<String>> girlPrefers) {
 //        if(!matches.keySet().containsAll(girls)){
@@ -146,7 +134,8 @@ public class TP1_1 {
 //            List<String> hePrefers = guyPrefers.get(couple.getValue());
 //            List<String> heLikesBetter = new LinkedList<String>();
 //            heLikesBetter.addAll(hePrefers.subList(0, hePrefers.indexOf(couple.getKey())));
-// 
+//      
+//            
 //            for(String guy : sheLikesBetter){
 //                String guysFinace = invertedMatches.get(guy);
 //                List<String> thisGuyPrefers = guyPrefers.get(guy);
