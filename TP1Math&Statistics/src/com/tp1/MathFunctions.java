@@ -11,6 +11,7 @@ public class MathFunctions {
 
 	public static int max(int[] vector, boolean ordered) {
 		int max = 0;
+
 		if (ordered) {
 			max = vector[0];
 		} else {
@@ -20,35 +21,42 @@ public class MathFunctions {
 				}
 			}
 		}
+
 		return max;
 	}
 
 	public static int max(List<Integer> list) {
 		Iterator iterator = list.iterator();
 		int max = 0;
+
 		while (iterator.hasNext()) {
 			Integer current = (Integer) iterator.next();
 			if (current > max) {
 				max = current;
 			}
 		}
+
 		return max;
 	}
 
 	public static double average(int[] vector) {
 		double sum = 0;
+
 		for (int number : vector) {
 			sum += number;
 		}
+
 		return sum / vector.length;
 	}
 
 	public static double average(List<Integer> list) {
 		Iterator iterator = list.iterator();
 		double sum = 0;
+
 		while (iterator.hasNext()) {
 			sum += (Integer) iterator.next();
 		}
+
 		return sum / list.size();
 	}
 
@@ -58,11 +66,13 @@ public class MathFunctions {
 			int previousOccurrences = occurrences.get(number);
 			occurrences.put(number, ++previousOccurrences);
 		}
+
 		int maxOccurrences = 0;
 		int trend = 0;
 		Set entrySet = occurrences.entrySet();
 		Iterator<Map.Entry<Integer, Integer>> iterator = entrySet.iterator();
 		int size = entrySet.size();
+
 		while (iterator.hasNext() && maxOccurrences < size / 2) {
 			Entry<Integer, Integer> entry = iterator.next();
 			if (entry.getValue() > maxOccurrences) {
@@ -79,11 +89,13 @@ public class MathFunctions {
 			int previousOccurrences = occurrences.get(number);
 			occurrences.put(number, ++previousOccurrences);
 		}
+
 		int maxOccurrences = 0;
 		int trend = 0;
 		Set entrySet = occurrences.entrySet();
 		Iterator<Map.Entry<Integer, Integer>> iterator = entrySet.iterator();
 		int size = entrySet.size();
+
 		while (iterator.hasNext() && maxOccurrences < size / 2) {
 			Entry<Integer, Integer> entry = iterator.next();
 			if (entry.getValue() > maxOccurrences) {
@@ -91,7 +103,26 @@ public class MathFunctions {
 				maxOccurrences = entry.getValue();
 			}
 		}
+
 		return trend;
 	}
 
+	public static int orderedTrend(int[] vector) {
+		int maxOccurrences = 0;
+		int trend = 0;
+		int index = 0;
+
+		while (index < vector.length && maxOccurrences < vector.length - index) {
+			int currentNumberOccurrences = 0;
+			int currentNumber = vector[index];
+			while (vector[index] == currentNumber) {
+				currentNumberOccurrences++;
+				index++;
+			}
+			if (currentNumberOccurrences > maxOccurrences) {
+				trend = currentNumber;
+			}
+		}
+		return trend;
+	}
 }
