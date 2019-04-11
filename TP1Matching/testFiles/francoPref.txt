@@ -1,6 +1,8 @@
-Abril,20
-Camila,12
-Miriam,6
-Rosario,9
+Abril,1
+Lautaro,2
+Manuel,3
+Miriam,4
+Sabrina,5
+Ximena,6
 
 
