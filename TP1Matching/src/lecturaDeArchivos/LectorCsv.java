@@ -1,25 +1,32 @@
 package lecturaDeArchivos;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import com.csvreader.CsvReader;
-import conteiner.Cola;
 
 public class LectorCsv {
 
-	public static Cola<String[]> leerArchivoCsv(String direccionArchivo){
+	public static ArrayList<ArrayList<String>> cargarDatosDelArchivo(String direccionArchivo){
 		
-		Cola<String[]> texto = new Cola<String[]>();
+		ArrayList<ArrayList<String>> campos = new ArrayList<ArrayList<String>>();
 		
 		try {
 		
-			String[ ]linea;
+			String[ ]linea = null;
+			
 			CsvReader lectorCSV = new CsvReader(direccionArchivo);
+			
+			if(lectorCSV.readRecord()) linea = lectorCSV.getValues();
+			
+			for(int i = 0 ; i < linea.length ; i++) campos.add(new ArrayList<String>());
 				
-			while(lectorCSV.readRecord()) {
-						
+			while(lectorCSV.readRecord() || linea.length != 0) {
+					
+				for(int i = 0 ; i < linea.length ; i++) campos.get(i).add(linea[i]);
+				
 				linea = lectorCSV.getValues();
-				texto.acolar(linea);
+					
 			}
 			
 		}catch (NumberFormatException e) {
@@ -31,7 +38,7 @@ public class LectorCsv {
 					e.printStackTrace();
 		}
 			
-		return texto;	
+		return campos;	
 	}
 
 		

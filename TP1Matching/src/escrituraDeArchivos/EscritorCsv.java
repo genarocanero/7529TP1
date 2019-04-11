@@ -2,14 +2,14 @@ package escrituraDeArchivos;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import com.csvreader.CsvWriter;
 
 public class EscritorCsv {
 
-	public static void crearArchivoCsv(Map<String, String> matches,ArrayList<String> candidatos,
+	public static void crearArchivoCsv(Map<String, String> matches,List<String> candidatos,
 			String archivo) {
 		
 		CsvWriter writer;
