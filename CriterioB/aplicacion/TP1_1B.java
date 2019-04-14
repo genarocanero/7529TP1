@@ -1,3 +1,4 @@
+package aplicacion;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,7 +8,7 @@ import conteiner.Presentador;
 import escrituraDeArchivos.EscritorCsv;
 import lecturaDeArchivos.LectorCsv;
 
-public class TP1_1 {
+public class TP1_1B {
 	
 
     public static void main(String[] args){
@@ -98,7 +99,7 @@ public class TP1_1 {
                 else{
                 	Preferencias preferenciasPosiblePareja = preferencias.get(posiblePareja);
                 	
-                	if(preferenciasPosiblePareja.getCalificacionDe(suPareja) < preferenciasPosiblePareja.getCalificacionDe(oferenteActual)){
+                	if(preferenciasPosiblePareja.getCalificacionDe(suPareja) <= preferenciasPosiblePareja.getCalificacionDe(oferenteActual)){
                        
                         comprometidos.replace(posiblePareja, oferenteActual);
                         oferentesLibres.add(suPareja);

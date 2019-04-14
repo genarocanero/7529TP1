@@ -1,4 +1,4 @@
-package src;
+package aplicacion;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,7 +8,7 @@ import conteiner.Presentador;
 import escrituraDeArchivos.EscritorCsv;
 import lecturaDeArchivos.LectorCsv;
 
-public class TP1_1B {
+public class TP1_1 {
 	
 
     public static void main(String[] args){
@@ -37,7 +37,7 @@ public class TP1_1B {
         
     }
     
-    private static Presentador cargarPresentador(String archivoPreferencias) {
+    public static Presentador cargarPresentador(String archivoPreferencias) {
     	
     	Presentador presentadorDelOferente = new Presentador();
     	
@@ -55,7 +55,7 @@ public class TP1_1B {
     }
  
 
-	private static Preferencias cargarPreferencias(String archivoPreferencias) {
+	public static Preferencias cargarPreferencias(String archivoPreferencias) {
 		
 		ArrayList<ArrayList<String>> datosPreferencias = LectorCsv.cargarDatosDelArchivo(archivoPreferencias);
 		
@@ -99,7 +99,7 @@ public class TP1_1B {
                 else{
                 	Preferencias preferenciasPosiblePareja = preferencias.get(posiblePareja);
                 	
-                	if(preferenciasPosiblePareja.getCalificacionDe(suPareja) <= preferenciasPosiblePareja.getCalificacionDe(oferenteActual)){
+                	if(preferenciasPosiblePareja.getCalificacionDe(suPareja) < preferenciasPosiblePareja.getCalificacionDe(oferenteActual)){
                        
                         comprometidos.replace(posiblePareja, oferenteActual);
                         oferentesLibres.add(suPareja);
