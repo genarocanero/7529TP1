@@ -105,13 +105,8 @@ public class testerPareo {
 					
 				if(preferencias.getCalificacionDe(suPareja) < preferencias.getCalificacionDe(oferenteActual)) {
 					
-					System.out.print(oferenteActual);
-					System.out.print(" prefiere a ");
-					System.out.println(deseado);
-					System.out.print(" y viceversa, pero su pareja actual es ");
-					System.out.println(parejaActual);
-					
-					
+					System.out.print("\n" + oferenteActual + " prefiere mas a " + deseado + " antes que a su pareja " + parejaActual);
+					System.out.print(" y " + deseado + " prefiere mas a " + oferenteActual + " antes que a su pareja " + suPareja + "\n\n");				
 					esEstable = false;
 				}
 			}
