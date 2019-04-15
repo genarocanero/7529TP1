@@ -177,16 +177,32 @@ public class MathFunctions {
 		for (int element : list) {
 			sum += Math.pow(element - average, 2);
 		}
+
 		return Math.sqrt(sum / list.size());
 	}
 
 /*	public static List<List<Integer>> permutations(int[] vector) {
-		for (int i = 0; i < vector.length; i++) {
-			List<Integer> permutation = new ArrayList<>();
-			permutation.add(vector[i]);
-			for (int j = i + 1; j < vector.length; j++) {
-				permutation.add(vector[j]);
-			}
-		}
+
+	}
+
+	public static List<List<Integer>> permutations(List<Integer> list) {
+
+	}
+
+	public static List<List<Integer>> variationsInRElements(int[] vector) {
+
+	}
+
+	public static List<List<Integer>> variationsInRElements(List<Integer> list) {
+
+	}
+
+	public static List<List<Integer>> variationsWithRRepetitions(int[] vector) {
+
+	}
+
+	public static List<List<Integer>> variationsWithRRepetitions(List<Integer> list) {
+
 	}*/
+
 }
