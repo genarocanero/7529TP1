@@ -129,8 +129,7 @@ public class MathFunctions {
 	public static int orderedMedian(int[] orderedVector) {
 		int median;
 		if (orderedVector.length % 2 != 0) {
-			int index = orderedVector.length / 2;
-			median = orderedVector[index];
+			median = orderedVector[orderedVector.length / 2];
 		} else {
 			median = (orderedVector[orderedVector.length / 2] +
 					  orderedVector[orderedVector.length / 2 - 1]) / 2;
