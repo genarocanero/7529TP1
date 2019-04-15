@@ -1,11 +1,16 @@
 package com.tp1;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 public class MathFunctions {
 
@@ -134,6 +139,22 @@ public class MathFunctions {
 			median /= 2;
 		}
 		return median;
+	}
+
+	public static int median(int[] vector) {
+		Arrays.sort(vector);
+		return orderedMedian(vector);
+	}
+
+	public static int median(List<Integer> list) {
+		Collections.sort(list);
+		int[] orderedVector = new int[list.size()];
+		int index = 0;
+		for (int element : list) {
+			orderedVector[index] = element;
+			index++;
+		}
+		return orderedMedian(orderedVector);
 	}
 
 }
