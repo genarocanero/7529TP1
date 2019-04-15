@@ -106,7 +106,7 @@ public class testerPareo {
 				if(preferencias.getCalificacionDe(suPareja) < preferencias.getCalificacionDe(oferenteActual)) {
 					
 					System.out.print("\n" + oferenteActual + " prefiere mas a " + deseado + " antes que a su pareja " + parejaActual);
-					System.out.print(" y " + deseado + " prefiere mas a " + oferenteActual + " antes que a su pareja " + suPareja + "\n\n");				
+					System.out.print(", y " + deseado + " prefiere mas a " + oferenteActual + " antes que a su pareja " + suPareja + "\n\n");				
 					esEstable = false;
 				}
 			}
