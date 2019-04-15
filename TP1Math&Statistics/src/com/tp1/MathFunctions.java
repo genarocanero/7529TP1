@@ -131,10 +131,12 @@ public class MathFunctions {
 	public static int orderedMedian(int[] orderedVector) {
 		int median;
 		median = orderedVector[orderedVector.length / 2];
+
 		if (orderedVector.length % 2 == 0) {
 			median += orderedVector[orderedVector.length / 2 - 1];
 			median /= 2;
 		}
+
 		return median;
 	}
 
@@ -147,11 +149,34 @@ public class MathFunctions {
 		Collections.sort(list);
 		int[] orderedVector = new int[list.size()];
 		int index = 0;
+
 		for (int element : list) {
 			orderedVector[index] = element;
 			index++;
 		}
+
 		return orderedMedian(orderedVector);
 	}
 
+	public static double standardDeviation(int[] vector) {
+		double average = average(vector);
+		double sum = 0;
+
+		for (int element : vector) {
+			sum += Math.pow(element - average, 2);
+		}
+
+		return Math.sqrt(sum / vector.length);
+	}
+
+	public static double standardDeviation(List<Integer> list) {
+		double average = average(list);
+		double sum = 0;
+
+		for (int element : list) {
+			sum += Math.pow(element - average, 2);
+		}
+
+		return Math.sqrt(sum / list.size());
+	}
 }
