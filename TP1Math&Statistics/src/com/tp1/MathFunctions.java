@@ -1,5 +1,6 @@
 package com.tp1;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
@@ -148,15 +149,14 @@ public class MathFunctions {
 
 	public static int median(List<Integer> list) {
 		Collections.sort(list);
-		int[] orderedVector = new int[list.size()];
-		int index = 0;
-
-		for (int element : list) {
-			orderedVector[index] = element;
-			index++;
+		int median;
+		int size = list.size();
+		if (size % 2 != 0) {
+			median = list.get(size / 2);
+		} else {
+			median = (list.get(size / 2) + list.get(size / 2 - 1)) / 2;
 		}
-
-		return orderedMedian(orderedVector);
+		return median;
 	}
 
 	public static double standardDeviation(int[] vector) {
@@ -177,7 +177,16 @@ public class MathFunctions {
 		for (int element : list) {
 			sum += Math.pow(element - average, 2);
 		}
-
 		return Math.sqrt(sum / list.size());
 	}
+
+/*	public static List<List<Integer>> permutations(int[] vector) {
+		for (int i = 0; i < vector.length; i++) {
+			List<Integer> permutation = new ArrayList<>();
+			permutation.add(vector[i]);
+			for (int j = i + 1; j < vector.length; j++) {
+				permutation.add(vector[j]);
+			}
+		}
+	}*/
 }
