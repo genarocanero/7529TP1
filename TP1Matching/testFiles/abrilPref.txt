@@ -1,6 +1,0 @@
-Camila,4
-Carlos,15
-Emilio,5
-Franco,20
-Juan,16
-Rosario,12

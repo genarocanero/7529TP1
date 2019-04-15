@@ -1,7 +1,0 @@
-Abril,1
-Lautaro,1
-Manuel,7
-Miriam,9
-Sabrina,20
-Ximena,5
-

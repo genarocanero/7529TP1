@@ -1,0 +1,8 @@
+abril,20
+franco,19
+ramiro,18
+roberto,15
+sabrina,16
+camila,17
+juan,18
+emilio,19

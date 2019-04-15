@@ -1,0 +1,8 @@
+agustin,12
+melina,13
+valentina,20
+alvaro,20
+luis,16
+miguel,17
+mateo,18
+isidro,19

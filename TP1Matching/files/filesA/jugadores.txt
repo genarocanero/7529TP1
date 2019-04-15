@@ -1,0 +1,16 @@
+1,abril,C:\Users\Franco\Desktop\ArchivosB\abrilPref.txt
+2,franco,C:\Users\Franco\Desktop\ArchivosB\francoPref.txt
+3,ramiro,C:\Users\Franco\Desktop\ArchivosB\ramiroPref.txt
+4,roberto,C:\Users\Franco\Desktop\ArchivosB\robertoPref.txt
+5,sabrina,C:\Users\Franco\Desktop\ArchivosB\sabrinaPref.txt
+6,camila,C:\Users\Franco\Desktop\ArchivosB\camilaPref.txt
+7,juan,C:\Users\Franco\Desktop\ArchivosB\juanPref.txt
+8,emilio,C:\Users\Franco\Desktop\ArchivosB\emilioPref.txt
+9,agustin,C:\Users\Franco\Desktop\ArchivosB\agustinPref.txt
+10,melina,C:\Users\Franco\Desktop\ArchivosB\melinaPref.txt
+11,valentina,C:\Users\Franco\Desktop\ArchivosB\valentinaPref.txt
+12,alvaro,C:\Users\Franco\Desktop\ArchivosB\alvaroPref.txt
+13,luis,C:\Users\Franco\Desktop\ArchivosB\luisPref.txt
+14,miguel,C:\Users\Franco\Desktop\ArchivosB\miguelPref.txt
+15,mateo,C:\Users\Franco\Desktop\ArchivosB\mateoPref.txt
+16,isidro,C:\Users\Franco\Desktop\ArchivosB\isidroPref.txt
