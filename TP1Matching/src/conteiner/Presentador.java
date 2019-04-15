@@ -1,12 +1,16 @@
 package conteiner;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Presentador {
 
 	private HashMap<Integer,Cola<String>> preferencias;
 
 	private int calificacionActual;
+	
+	private int cantidadParejas;
 
 	
 	public Presentador() {
@@ -14,6 +18,8 @@ public class Presentador {
 		this.preferencias = new HashMap<Integer,Cola<String>>();
 
 		this.calificacionActual = 20;
+		
+		this.cantidadParejas = 0;
 	}
 	
 	public void agregarPosiblePareja(String nombre, int calificacion) {
@@ -21,6 +27,8 @@ public class Presentador {
 		if(!(hayOpcionesConTalCalificacion(calificacion))) this.preferencias.put(calificacion, new Cola<String>());
 
 		this.preferencias.get(calificacion).acolar(nombre);
+		
+		this.cantidadParejas++;
 	}
 	
 	private boolean hayOpcionesConTalCalificacion(int calificacion) {
@@ -39,7 +47,31 @@ public class Presentador {
 	
 		String nombre = this.preferencias.get(calificacionActual).desacolar();
 		
+		this.cantidadParejas--;
+		
 		return nombre;
+	}
+	
+	private boolean quedanPosiblesParejas() {
+		
+		return (this.cantidadParejas > 0);
+	}
+	
+	public List<String> obtenerMejoresQue(String nombre){
+		
+		List<String> mejores = new ArrayList<String>();
+		
+		boolean nombreEncontrado = false;
+		
+		while(!nombreEncontrado && this.quedanPosiblesParejas()) {
+			
+			String nombreActual = this.presentarPosiblePareja();
+			
+			if(!nombre.equals(nombreActual)) mejores.add(nombreActual);
+			else nombreEncontrado = true;
+		}
+		
+		return mejores;
 	}
 
 	

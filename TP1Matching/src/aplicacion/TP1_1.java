@@ -1,3 +1,4 @@
+package aplicacion;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,7 +15,6 @@ public class TP1_1 {
     	
     	String direccionArchivo = args[1];
     	int cantidadDeJugadores = Integer.parseInt(args[0]);
-    	//prueba
     	
     	ArrayList<ArrayList<String>> camposDelArchivoCSV = LectorCsv.cargarDatosDelArchivo(direccionArchivo);
     	
@@ -37,7 +37,7 @@ public class TP1_1 {
         
     }
     
-    private static Presentador cargarPresentador(String archivoPreferencias) {
+    public static Presentador cargarPresentador(String archivoPreferencias) {
     	
     	Presentador presentadorDelOferente = new Presentador();
     	
@@ -55,7 +55,7 @@ public class TP1_1 {
     }
  
 
-	private static Preferencias cargarPreferencias(String archivoPreferencias) {
+	public static Preferencias cargarPreferencias(String archivoPreferencias) {
 		
 		ArrayList<ArrayList<String>> datosPreferencias = LectorCsv.cargarDatosDelArchivo(archivoPreferencias);
 		
