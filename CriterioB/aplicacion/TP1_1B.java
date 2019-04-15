@@ -75,7 +75,7 @@ public class TP1_1B {
 	
 	private static Map<String, String> match(List<String> oferentes,Map<String,Presentador> presentadores,Map<String,Preferencias> preferencias){
       
-		Map<String, String> comprometidos = new HashMap<String, String>();
+		Map<String, String> equipos = new HashMap<String, String>();
 		List<String> oferentesLibres = new ArrayList<String>();
         oferentesLibres.addAll(oferentes);
       
@@ -89,11 +89,11 @@ public class TP1_1B {
             while(!seFormoPareja){
             	
             	String posiblePareja = presentador.presentarPosiblePareja();
-            	String suPareja = comprometidos.get(posiblePareja);
+            	String suPareja = equipos.get(posiblePareja);
             	
                 if(suPareja == null){
                     
-                	comprometidos.put(posiblePareja, oferenteActual); 
+                	equipos.put(posiblePareja, oferenteActual); 
                 	seFormoPareja = true; 	
                 }
                 else{
@@ -101,14 +101,14 @@ public class TP1_1B {
                 	
                 	if(preferenciasPosiblePareja.getCalificacionDe(suPareja) <= preferenciasPosiblePareja.getCalificacionDe(oferenteActual)){
                        
-                        comprometidos.replace(posiblePareja, oferenteActual);
+                        equipos.replace(posiblePareja, oferenteActual);
                         oferentesLibres.add(suPareja);
                         seFormoPareja = true;
                     }
                 }
             }
         }
-        return comprometidos;
+        return equipos;
     }
  
 }
