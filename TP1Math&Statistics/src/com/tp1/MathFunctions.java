@@ -117,12 +117,13 @@ public class MathFunctions {
 		while (index < vector.length && maxOccurrences < vector.length - index) {
 			int currentNumberOccurrences = 0;
 			int currentNumber = vector[index];
-			while (vector[index] == currentNumber) {
+			while (index < vector.length && vector[index] == currentNumber) {
 				currentNumberOccurrences++;
 				index++;
 			}
 			if (currentNumberOccurrences > maxOccurrences) {
 				trend = currentNumber;
+				maxOccurrences = currentNumberOccurrences;
 			}
 		}
 		return trend;
