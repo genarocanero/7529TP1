@@ -14,8 +14,8 @@ public class MathFunctions {
 
 	private static void completeMapWithAppearances(List<Integer> listTree, Map<Integer, Integer> map) {
 
-		List rightTree = TreeUtils.getRightTree(listTree);
-		List leftTree = TreeUtils.getRightTree(listTree);
+		List<Integer> rightTree = TreeUtils.getRightTree(listTree);
+		List<Integer> leftTree = TreeUtils.getRightTree(listTree);
 
 		if (!rightTree.isEmpty()) {
 			completeMapWithAppearances(rightTree, map);
@@ -101,7 +101,7 @@ public class MathFunctions {
 			sum += (Integer) iterator.next();
 		}
 
-		if (list.size() > 0) {
+		if (!list.isEmpty()) {
 			avg = sum / list.size();
 		}
 
@@ -111,8 +111,8 @@ public class MathFunctions {
 	public static double treeAverage(List<Integer> listTree) {
 		double avg = 0;
 
-		if (listTree.size() > 0) {
-			avg = TreeUtils.sum(listTree) / listTree.size();
+		if (!listTree.isEmpty()) {
+			avg = (double) TreeUtils.sum(listTree) / listTree.size();
 		}
 
 		return avg;
@@ -128,7 +128,7 @@ public class MathFunctions {
 
 		int maxOccurrences = 0;
 		int trend = 0;
-		Set entrySet = occurrences.entrySet();
+		Set<Entry<Integer, Integer>> entrySet = occurrences.entrySet();
 		Iterator<Map.Entry<Integer, Integer>> iterator = entrySet.iterator();
 		int size = entrySet.size();
 
@@ -152,7 +152,7 @@ public class MathFunctions {
 
 		int maxOccurrences = 0;
 		int trend = 0;
-		Set entrySet = occurrences.entrySet();
+		Set<Entry<Integer, Integer>> entrySet = occurrences.entrySet();
 		Iterator<Map.Entry<Integer, Integer>> iterator = entrySet.iterator();
 		int size = entrySet.size();
 
@@ -188,7 +188,7 @@ public class MathFunctions {
 	}
 
 	public static int treeTrend(List<Integer> listTree) {
-		Map map = new HashMap<Integer, Integer>();
+		Map<Integer, Integer> map = new HashMap<>();
 		int maxOccurrences = 0;
 		int trend = 0;
 
@@ -285,7 +285,7 @@ public class MathFunctions {
 	public static double standardDeviation(List<Integer> list) {
 		double average = 0;
 
-		if (list.size() > 0) {
+		if (!list.isEmpty()) {
 			average = average(list);
 			double sum = 0;
 
@@ -302,9 +302,10 @@ public class MathFunctions {
 	public static double treeStandardDeviation(List<Integer> listTree) {
 		double average = 0;
 
-		if (listTree.size() > 0) {
+		if (!listTree.isEmpty()) {
 			treeAverage(listTree);
-			int sum = 0;
+			double sum = 0;
+
 			for (int element : listTree) {
 				sum += Math.pow(element - average, 2);
 			}

@@ -5,7 +5,7 @@ import java.util.List;
 
 public class TreeUtils {
 
-	public static List getRightTree(List<Integer> list) {
+	public static List<Integer> getRightTree(List<Integer> list) {
 		List rightTree = new ArrayList();
 
 		int index = 0;
@@ -29,19 +29,7 @@ public class TreeUtils {
 		return count;
 	}
 
-	public static int getLeftTreeSize(List<Integer> list) {
-		int index = 0;
-		int count = 0;
-
-		while (index * 2 + 1 < list.size()) {
-			index = 2 * index + 1;
-			count++;
-		}
-
-		return count;
-	}
-
-	public static List getLeftTree(List<Integer> list) {
+	public static List<Integer> getLeftTree(List<Integer> list) {
 		List leftTree = new ArrayList();
 
 		int index = 0;
@@ -53,6 +41,17 @@ public class TreeUtils {
 		return leftTree;
 	}
 
+	public static int getLeftTreeSize(List<Integer> list) {
+		int index = 0;
+		int count = 0;
+
+		while (index * 2 + 1 < list.size()) {
+			index = 2 * index + 1;
+			count++;
+		}
+
+		return count;
+	}
 
 	public static int sum(List<Integer> listTree) {
 		int sum = listTree.get(0);
