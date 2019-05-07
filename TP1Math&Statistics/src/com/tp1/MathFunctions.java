@@ -181,28 +181,252 @@ public class MathFunctions {
 		return Math.sqrt(sum / list.size());
 	}
 
-/*	public static List<List<Integer>> permutations(int[] vector) {
+	public static String[] permutations(String[] array) {
+		String[] finalArray = array.clone();
+		String[] lastPermutations = array.clone();
+		int iterator = 1;
 
+		while (iterator < array.length) {
+			String[] temporalArray = lastPermutations.clone();
+			lastPermutations = new String[temporalArray.length * array.length];
+			int index = 0;
+
+			for (String temporalElement : temporalArray) {
+				for (String originalElement : array) {
+					String newElement = temporalElement.concat(originalElement);
+					lastPermutations[index] = newElement;
+					finalArray[index] = newElement;
+					index ++;
+				}
+			}
+			iterator ++;
+		}
+		return finalArray;
 	}
 
-	public static List<List<Integer>> permutations(List<Integer> list) {
+	public static List<String> permutations(LinkedList<String> list) {
+		LinkedList<String> finalList = new LinkedList<>();
+		finalList.addAll(list);
+		LinkedList<String> lastPermutations = new LinkedList<>();
+		lastPermutations.addAll(list);
+		int iterator = 1;
 
+		while (iterator < list.size()) {
+			LinkedList<String> temporalList = new LinkedList<>();
+			temporalList.addAll(lastPermutations);
+			lastPermutations.clear();
+
+			for (String temporalElement : temporalList) {
+				for (String originalElement : list) {
+					lastPermutations.add(temporalElement.concat(originalElement));
+				}
+			}
+			finalList.addAll(lastPermutations);
+			iterator++;
+		}
+		return finalList;
 	}
 
-	public static List<List<Integer>> variationsInRElements(int[] vector) {
-
+	public static String[] orderedPermutations(String[] orderedArray) {
+		return permutations(orderedArray);
 	}
 
-	public static List<List<Integer>> variationsInRElements(List<Integer> list) {
-
+	/**
+	 *  treeList is a list representing a Tree. The structure is:
+	 *	element at 0: root
+	 *  element at 2n + 1: left node (of element at n)
+	 *  element at 2n + 2: right node (of element at n)
+	 **/
+	public static List<String> treePermutations(LinkedList<String> treeList) {
+		return permutations(treeList);
 	}
 
-	public static List<List<Integer>> variationsWithRRepetitions(int[] vector) {
+	// precondition: r is a natural number >= 1
+	public static String[] variationsInRElements(String[] array, int r) {
+		String[] finalArray = removeDuplicates(array);
+		String[] lastVariation = finalArray.clone();
+		int currentElement = 1;
 
+		while (currentElement < r){
+			String[] temporalArray = lastVariation.clone();
+			lastVariation = new String[temporalArray.length * array.length];
+			int iterator = 0;
+
+			for (String temporalElement : temporalArray){
+				for (String originalElement : array){
+					if (temporalElement.compareToIgnoreCase(originalElement) != 0) {
+						boolean existsInLastVariation = false;
+						String newElement = temporalElement.concat(originalElement);
+
+						for (String lastVariationElement : lastVariation){
+							if (!existsInLastVariation && newElement.compareToIgnoreCase(lastVariationElement) == 0){
+								existsInLastVariation = true;
+							}
+						}
+						if (!existsInLastVariation){
+							lastVariation[iterator] = newElement;
+							++ iterator;
+						}
+					}
+				}
+			}
+			if (++currentElement == r){
+				finalArray = Arrays.copyOfRange(lastVariation, 0, iterator);
+			}
+		}
+		return finalArray;
 	}
 
-	public static List<List<Integer>> variationsWithRRepetitions(List<Integer> list) {
+	private static String[] removeDuplicates (String[] array) {
+		String[] finalArray = new String[array.length];
+		int iterator = 0;
 
-	}*/
+		for (String element : array){
+			boolean existsInFinal = false;
 
+			for (String finalElement : finalArray){
+				if (!existsInFinal && element.compareToIgnoreCase(finalElement) == 0){
+					existsInFinal = true;
+				}
+			}
+			if (!existsInFinal){
+				finalArray[iterator] = element;
+				++ iterator;
+			}
+		}
+		return Arrays.copyOfRange(finalArray, 0, iterator - 1);
+	}
+
+	// precondition: r is a natural number >= 1
+	public static List<String> variationsInRElements(LinkedList<String> list, int r) {
+		LinkedList<String> finalList = removeDuplicates(list);
+		LinkedList<String> lastVariation = new LinkedList<>();
+		lastVariation.addAll(finalList);
+		int currentElement = 1;
+
+		while (currentElement < r){
+			LinkedList<String> temporalList = new LinkedList<>();
+			temporalList.addAll(lastVariation);
+			lastVariation.clear();
+
+			for (String temporalElement : temporalList){
+				for (String originalElement : list){
+					if (temporalElement.compareToIgnoreCase(originalElement) != 0) {
+						boolean existsInLastVariation = false;
+						String newElement = temporalElement.concat(originalElement);
+
+						for (String lastVariationElement : lastVariation){
+							if (!existsInLastVariation && newElement.compareToIgnoreCase(lastVariationElement) == 0){
+								existsInLastVariation = true;
+							}
+						}
+						if (!existsInLastVariation){
+							lastVariation.add(newElement);
+						}
+					}
+				}
+			}
+			if (++currentElement == r){
+				finalList = lastVariation;
+			}
+		}
+		return finalList;
+	}
+
+	private static LinkedList<String> removeDuplicates (LinkedList<String> list) {
+		LinkedList<String> finalList = new LinkedList<>();
+
+		for (String element : list){
+			boolean existsInFinal = false;
+
+			for (String finalElement : finalList){
+				if (!existsInFinal && element.compareToIgnoreCase(finalElement) == 0){
+					existsInFinal = true;
+				}
+			}
+			if (!existsInFinal){
+				finalList.add(element);
+			}
+		}
+		return finalList;
+	}
+
+	// precondition: r is a natural number >= 1
+	public static String[] orderedVariationsInRElements(String[] orderedArray, int r) {
+		return variationsInRElements(orderedArray, r);
+	}
+
+	/**
+	 *  treeList is a list representing a Tree. The structure is:
+	 *	element at 0: root
+	 *  element at 2n + 1: left node (of element at n)
+	 *  element at 2n + 2: right node (of element at n)
+	 *
+	 *  precondition: r is a natural number >= 1
+	 **/
+	public static List<String> treeVariationsInRElements(LinkedList<String> treeList, int r) {
+		return variationsInRElements(treeList, r);
+	}
+
+	// precondition: r is a natural number >= 1
+	public static String[] variationsWithRRepetitions(String[] array, int r) {
+		String[] finalArray = array.clone();
+		int iterator = 1;
+		int lastIndex = array.length-1;
+
+		while (iterator < r) {
+			String[] temporalArray = finalArray.clone();
+			finalArray = new String[temporalArray.length * array.length];
+			int index = 0;
+
+			for (String temporalElement : temporalArray) {
+				for (String originalElement : array) {
+					String newElement = temporalElement.concat(originalElement);
+					finalArray[index] = newElement;
+					index ++;
+				}
+			}
+			lastIndex = index -1;
+			iterator ++;
+		}
+		return Arrays.copyOfRange(finalArray, 0, lastIndex);
+	}
+
+	// precondition: r is a natural number >= 1
+	public static LinkedList<String> variationsWithRRepetitions(LinkedList<String> list, int r) {
+		LinkedList<String> finalList = new LinkedList<>();
+		finalList.addAll(list);
+		int iterator = 1;
+
+		while (iterator < r) {
+			LinkedList<String> temporalList = new LinkedList<>();
+			temporalList.addAll(finalList);
+			finalList.clear();
+
+			for (String temporalElement : temporalList) {
+				for (String originalElement : list) {
+					finalList.add(temporalElement.concat(originalElement));
+				}
+			}
+			iterator++;
+		}
+		return finalList;
+	}
+
+	// precondition: r is a natural number >= 1
+	public static String[] orderedVariationsWithRRepetitions(String[] orderedArray, int r) {
+		return variationsWithRRepetitions(orderedArray, r);
+	}
+
+	/**
+	 *  treeList is a list representing a Tree. The structure is:
+	 *	element at 0: root
+	 *  element at 2n + 1: left node (of element at n)
+	 *  element at 2n + 2: right node (of element at n)
+	 *
+	 *  precondition: r is a natural number >= 1
+	 **/
+	public static LinkedList<String> treeVariationsWithRRepetitions(LinkedList<String> treeList, int r) {
+		return variationsWithRRepetitions(treeList, r);
+	}
 }
