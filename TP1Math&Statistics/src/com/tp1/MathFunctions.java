@@ -1,8 +1,8 @@
 package com.tp1;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -12,15 +12,34 @@ import java.util.Set;
 
 public class MathFunctions {
 
-	public static int max(int[] vector, boolean ordered) {
+	private static void completeMapWithAppearances(List<Integer> listTree, Map<Integer, Integer> map) {
+
+		List<Integer> rightTree = TreeUtils.getRightTree(listTree);
+		List<Integer> leftTree = TreeUtils.getRightTree(listTree);
+
+		if (!rightTree.isEmpty()) {
+			completeMapWithAppearances(rightTree, map);
+		}
+		if (!leftTree.isEmpty()) {
+			completeMapWithAppearances(leftTree, map);
+		}
+
+		int repetitions = map.get(listTree.get(0));
+		map.put(map.get(0), ++repetitions);
+
+	}
+
+	public static int max(int[] array, boolean ordered) {
 		int max = 0;
 
-		if (ordered) {
-			max = vector[0];
-		} else {
-			for (int number : vector) {
-				if (number > max) {
-					max = number;
+		if (array.length > 0) {
+			if (ordered) {
+				max = array[0];
+			} else {
+				for (int number : array) {
+					if (number > max) {
+						max = number;
+					}
 				}
 			}
 		}
@@ -42,37 +61,74 @@ public class MathFunctions {
 		return max;
 	}
 
-	public static double average(int[] vector) {
-		double sum = 0;
+	/**
+	 *  treeList is a list representing a Tree. The structure is:
+	 *    element at 0: root
+	 *    element at 2n + 1: left node (of element at n)
+	 *    element at 2n + 2: right node (of element at n)
+	 **/
+	public static int treeMax(List<Integer> treeList) {
+		int index = 0;
 
-		for (int number : vector) {
+		while (index * 2 + 2 < treeList.size()) {
+			index = 2 * index + 2;
+		}
+
+		return treeList.get(index);
+	}
+
+	public static double average(int[] array) {
+		double sum = 0;
+		double avg = 0;
+
+		for (int number : array) {
 			sum += number;
 		}
 
-		return sum / vector.length;
+		if (array.length > 0) {
+			avg = sum / array.length;
+		}
+
+		return avg;
 	}
 
 	public static double average(List<Integer> list) {
 		Iterator iterator = list.iterator();
 		double sum = 0;
+		double avg = 0;
 
 		while (iterator.hasNext()) {
 			sum += (Integer) iterator.next();
 		}
 
-		return sum / list.size();
+		if (!list.isEmpty()) {
+			avg = sum / list.size();
+		}
+
+		return avg;
 	}
 
-	public static int trend(int[] vector) {
+	public static double treeAverage(List<Integer> listTree) {
+		double avg = 0;
+
+		if (!listTree.isEmpty()) {
+			avg = (double) TreeUtils.sum(listTree) / listTree.size();
+		}
+
+		return avg;
+
+	}
+
+	public static int trend(int[] array) {
 		Map<Integer, Integer> occurrences = new LinkedHashMap<>();
-		for (int number : vector) {
+		for (int number : array) {
 			int previousOccurrences = occurrences.get(number);
 			occurrences.put(number, ++previousOccurrences);
 		}
 
 		int maxOccurrences = 0;
 		int trend = 0;
-		Set entrySet = occurrences.entrySet();
+		Set<Entry<Integer, Integer>> entrySet = occurrences.entrySet();
 		Iterator<Map.Entry<Integer, Integer>> iterator = entrySet.iterator();
 		int size = entrySet.size();
 
@@ -88,6 +144,7 @@ public class MathFunctions {
 
 	public static int trend(List<Integer> list) {
 		Map<Integer, Integer> occurrences = new LinkedHashMap<>();
+
 		for (int number : list) {
 			int previousOccurrences = occurrences.get(number);
 			occurrences.put(number, ++previousOccurrences);
@@ -95,7 +152,7 @@ public class MathFunctions {
 
 		int maxOccurrences = 0;
 		int trend = 0;
-		Set entrySet = occurrences.entrySet();
+		Set<Entry<Integer, Integer>> entrySet = occurrences.entrySet();
 		Iterator<Map.Entry<Integer, Integer>> iterator = entrySet.iterator();
 		int size = entrySet.size();
 
@@ -110,15 +167,15 @@ public class MathFunctions {
 		return trend;
 	}
 
-	public static int orderedTrend(int[] vector) {
+	public static int orderedTrend(int[] orderedArray) {
 		int maxOccurrences = 0;
 		int trend = 0;
 		int index = 0;
 
-		while (index < vector.length && maxOccurrences < vector.length - index) {
+		while (index < orderedArray.length && maxOccurrences < orderedArray.length - index) {
 			int currentNumberOccurrences = 0;
-			int currentNumber = vector[index];
-			while (index < vector.length && vector[index] == currentNumber) {
+			int currentNumber = orderedArray[index];
+			while (index < orderedArray.length && orderedArray[index] == currentNumber) {
 				currentNumberOccurrences++;
 				index++;
 			}
@@ -130,56 +187,90 @@ public class MathFunctions {
 		return trend;
 	}
 
-	public static int orderedMedian(int[] orderedVector) {
-		int median;
-		median = orderedVector[orderedVector.length / 2];
+	public static int treeTrend(List<Integer> listTree) {
+		Map<Integer, Integer> map = new HashMap<>();
+		int maxOccurrences = 0;
+		int trend = 0;
 
-		if (orderedVector.length % 2 == 0) {
-			median += orderedVector[orderedVector.length / 2 - 1];
+		completeMapWithAppearances(listTree, map);
+
+		Set<Entry<Integer, Integer>> entrySet = map.entrySet();
+		for (Entry<Integer, Integer> entry : entrySet) {
+			if (entry.getValue() > maxOccurrences) {
+				trend = entry.getKey();
+				maxOccurrences = entry.getValue();
+			}
+		}
+
+		return trend;
+
+	}
+
+	public static long orderedMedian(int[] orderedArray) {
+		int median;
+		median = orderedArray[orderedArray.length / 2];
+
+		if (orderedArray.length % 2 == 0) {
+			median += orderedArray[orderedArray.length / 2 - 1];
 			median /= 2;
 		}
 
 		return median;
 	}
 
-	public static int median(int[] vector) {
-		Arrays.sort(vector);
-		return orderedMedian(vector);
+	public static long median(int[] array) {
+		Arrays.sort(array);
+		return orderedMedian(array);
 	}
 
 	public static int median(List<Integer> list) {
 		Collections.sort(list);
 		int median;
 		int size = list.size();
+
 		if (size % 2 != 0) {
 			median = list.get(size / 2);
+
 		} else {
 			median = (list.get(size / 2) + list.get(size / 2 - 1)) / 2;
 		}
+
 		return median;
 	}
 
-	public static double standardDeviation(int[] vector) {
-		double average = average(vector);
-		double sum = 0;
+	public static int treeMedian(List<Integer> listTree) {
+		int median = 0;
 
-		for (int element : vector) {
-			sum += Math.pow(element - average, 2);
+		if (listTree.size() % 2 != 0) {
+			median = listTree.get(0);
+
+		} else {
+			if (TreeUtils.getRightTreeSize(listTree) > TreeUtils.getLeftTreeSize(listTree)) {
+				try {
+					median = (listTree.get(0) + listTree.get(2)) / 2;
+				} catch (IndexOutOfBoundsException e) {
+					e.printStackTrace();
+				}
+
+			} else {
+				try {
+					median = (listTree.get(0) + listTree.get(1)) / 2;
+				} catch (IndexOutOfBoundsException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 
-		return Math.sqrt(sum / vector.length);
+		return median;
 	}
 
-	public static double standardDeviation(List<Integer> list) {
-		double average = average(list);
-		double sum = 0;
+	public static double standardDeviation(int[] array) {
+		double average = 0;
 
-		for (int element : list) {
-			sum += Math.pow(element - average, 2);
-		}
+		if (array.length > 0) {
+			average = average(array);
 
-		return Math.sqrt(sum / list.size());
-	}
+			double sum = 0;
 
 	public static String[] permutations(String[] array) {
 		String[] finalArray = array.clone();
