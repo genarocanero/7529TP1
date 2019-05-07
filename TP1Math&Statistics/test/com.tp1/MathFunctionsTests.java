@@ -1,6 +1,7 @@
 package com.tp1;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
@@ -75,5 +76,4 @@ public class MathFunctionsTests {
 		Assert.assertEquals(0.8, MathFunctions.standardDeviation(list), 0.1);
 		Assert.assertEquals(0.8, MathFunctions.treeStandardDeviation(tree), 0.1);
 	}
-
 }

@@ -353,11 +353,21 @@ public class MathFunctions {
 				for (String originalElement : array) {
 					String newElement = temporalElement.concat(originalElement);
 					lastPermutations[index] = newElement;
-					finalArray[index] = newElement;
 					index ++;
 				}
 			}
-			iterator ++;
+			String [] auxiliarArray = finalArray.clone();
+			finalArray = new String[finalArray.length + lastPermutations.length];
+
+			for (int i = 0; i < finalArray.length; i++) {
+				if (i < auxiliarArray.length) {
+					finalArray[i] = auxiliarArray[i];
+				} else {
+					finalArray[i] = lastPermutations[i - auxiliarArray.length];
+				}
+			}
+
+			iterator++;
 		}
 		return finalArray;
 	}
@@ -403,27 +413,32 @@ public class MathFunctions {
 	public static String[] variationsInRElements(String[] array, int r) {
 		String[] finalArray = removeDuplicates(array);
 		String[] lastVariation = finalArray.clone();
+		int lastVariationIndex = lastVariation.length;
 		int currentElement = 1;
 
 		while (currentElement < r){
-			String[] temporalArray = lastVariation.clone();
+			String[] temporalArray = Arrays.copyOfRange(lastVariation, 0, lastVariationIndex);
 			lastVariation = new String[temporalArray.length * array.length];
 			int iterator = 0;
 
 			for (String temporalElement : temporalArray){
 				for (String originalElement : array){
-					if (temporalElement.compareToIgnoreCase(originalElement) != 0) {
+					if (temporalElement.compareToIgnoreCase(originalElement) != 0 &&
+						!temporalElement.contains(originalElement) &&
+						!originalElement.contains(temporalElement)) {
 						boolean existsInLastVariation = false;
 						String newElement = temporalElement.concat(originalElement);
 
 						for (String lastVariationElement : lastVariation){
-							if (!existsInLastVariation && newElement.compareToIgnoreCase(lastVariationElement) == 0){
+							if (lastVariationElement != null && !existsInLastVariation &&
+									newElement.compareToIgnoreCase(lastVariationElement) == 0){
 								existsInLastVariation = true;
 							}
 						}
 						if (!existsInLastVariation){
 							lastVariation[iterator] = newElement;
 							++ iterator;
+							lastVariationIndex = iterator;
 						}
 					}
 				}
@@ -443,7 +458,7 @@ public class MathFunctions {
 			boolean existsInFinal = false;
 
 			for (String finalElement : finalArray){
-				if (!existsInFinal && element.compareToIgnoreCase(finalElement) == 0){
+				if (finalElement != null && !existsInFinal && element.compareToIgnoreCase(finalElement) == 0){
 					existsInFinal = true;
 				}
 			}
@@ -452,7 +467,7 @@ public class MathFunctions {
 				++ iterator;
 			}
 		}
-		return Arrays.copyOfRange(finalArray, 0, iterator - 1);
+		return Arrays.copyOfRange(finalArray, 0, iterator);
 	}
 
 	// precondition: r is a natural number >= 1
@@ -469,12 +484,15 @@ public class MathFunctions {
 
 			for (String temporalElement : temporalList){
 				for (String originalElement : list){
-					if (temporalElement.compareToIgnoreCase(originalElement) != 0) {
+					if (temporalElement.compareToIgnoreCase(originalElement) != 0 &&
+							!temporalElement.contains(originalElement) &&
+							!originalElement.contains(temporalElement)) {
 						boolean existsInLastVariation = false;
 						String newElement = temporalElement.concat(originalElement);
 
 						for (String lastVariationElement : lastVariation){
-							if (!existsInLastVariation && newElement.compareToIgnoreCase(lastVariationElement) == 0){
+							if (lastVariationElement != null && !existsInLastVariation &&
+									newElement.compareToIgnoreCase(lastVariationElement) == 0){
 								existsInLastVariation = true;
 							}
 						}
@@ -498,7 +516,7 @@ public class MathFunctions {
 			boolean existsInFinal = false;
 
 			for (String finalElement : finalList){
-				if (!existsInFinal && element.compareToIgnoreCase(finalElement) == 0){
+				if (finalElement != null && !existsInFinal && element.compareToIgnoreCase(finalElement) == 0){
 					existsInFinal = true;
 				}
 			}
@@ -530,7 +548,7 @@ public class MathFunctions {
 	public static String[] variationsWithRRepetitions(String[] array, int r) {
 		String[] finalArray = array.clone();
 		int iterator = 1;
-		int lastIndex = array.length-1;
+		int lastIndex = array.length;
 
 		while (iterator < r) {
 			String[] temporalArray = finalArray.clone();
@@ -544,7 +562,7 @@ public class MathFunctions {
 					index ++;
 				}
 			}
-			lastIndex = index -1;
+			lastIndex = index;
 			iterator ++;
 		}
 		return Arrays.copyOfRange(finalArray, 0, lastIndex);
