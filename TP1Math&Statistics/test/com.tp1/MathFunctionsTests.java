@@ -1,7 +1,6 @@
 package com.tp1;
 
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
