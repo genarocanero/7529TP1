@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -24,8 +25,14 @@ public class MathFunctions {
 			completeMapWithAppearances(leftTree, map);
 		}
 
-		int repetitions = map.get(listTree.get(0));
-		map.put(map.get(0), ++repetitions);
+		int repetitions = 0;
+		try {
+			repetitions = map.get(listTree.get(0));
+		} catch (NullPointerException e) {
+			// element does not exist yet
+		} finally {
+			map.put(listTree.get(0), ++repetitions);
+		}
 
 	}
 
@@ -122,8 +129,14 @@ public class MathFunctions {
 	public static int trend(int[] array) {
 		Map<Integer, Integer> occurrences = new LinkedHashMap<>();
 		for (int number : array) {
-			int previousOccurrences = occurrences.get(number);
-			occurrences.put(number, ++previousOccurrences);
+			int previousOccurrences = 0;
+			try {
+				previousOccurrences = occurrences.get(number);
+			} catch (NullPointerException e) {
+				// element does not exist yet
+			} finally {
+				occurrences.put(number, ++previousOccurrences);
+			}
 		}
 
 		int maxOccurrences = 0;
@@ -146,8 +159,14 @@ public class MathFunctions {
 		Map<Integer, Integer> occurrences = new LinkedHashMap<>();
 
 		for (int number : list) {
-			int previousOccurrences = occurrences.get(number);
-			occurrences.put(number, ++previousOccurrences);
+			int previousOccurrences = 0;
+			try {
+				previousOccurrences = occurrences.get(number);
+			} catch (NullPointerException e) {
+				// element does not exist yet
+			} finally {
+				occurrences.put(number, ++previousOccurrences);
+			}
 		}
 
 		int maxOccurrences = 0;
@@ -206,40 +225,40 @@ public class MathFunctions {
 
 	}
 
-	public static long orderedMedian(int[] orderedArray) {
-		int median;
+	public static double orderedMedian(int[] orderedArray) {
+		double median;
 		median = orderedArray[orderedArray.length / 2];
 
 		if (orderedArray.length % 2 == 0) {
 			median += orderedArray[orderedArray.length / 2 - 1];
-			median /= 2;
+			median /= 2.0;
 		}
 
 		return median;
 	}
 
-	public static long median(int[] array) {
+	public static double median(int[] array) {
 		Arrays.sort(array);
 		return orderedMedian(array);
 	}
 
-	public static int median(List<Integer> list) {
+	public static double median(List<Integer> list) {
 		Collections.sort(list);
-		int median;
+		float median;
 		int size = list.size();
 
 		if (size % 2 != 0) {
 			median = list.get(size / 2);
 
 		} else {
-			median = (list.get(size / 2) + list.get(size / 2 - 1)) / 2;
+			median = ((float) list.get(size / 2) + (float) list.get(size / 2 - 1)) / 2f;
 		}
 
 		return median;
 	}
 
-	public static int treeMedian(List<Integer> listTree) {
-		int median = 0;
+	public static double treeMedian(List<Integer> listTree) {
+		float median = 0;
 
 		if (listTree.size() % 2 != 0) {
 			median = listTree.get(0);
@@ -247,14 +266,14 @@ public class MathFunctions {
 		} else {
 			if (TreeUtils.getRightTreeSize(listTree) > TreeUtils.getLeftTreeSize(listTree)) {
 				try {
-					median = (listTree.get(0) + listTree.get(2)) / 2;
+					median = ((float) listTree.get(0) + (float) listTree.get(1)) / 2;
 				} catch (IndexOutOfBoundsException e) {
 					e.printStackTrace();
 				}
 
 			} else {
 				try {
-					median = (listTree.get(0) + listTree.get(1)) / 2;
+					median = ((float) listTree.get(0) + (float) listTree.get(2)) / 2;
 				} catch (IndexOutOfBoundsException e) {
 					e.printStackTrace();
 				}
@@ -266,11 +285,59 @@ public class MathFunctions {
 
 	public static double standardDeviation(int[] array) {
 		double average = 0;
+		double standardDeviation = 0;
 
 		if (array.length > 0) {
 			average = average(array);
 
 			double sum = 0;
+
+			for (int element : array) {
+				sum += Math.pow(element - average, 2);
+			}
+
+			standardDeviation = Math.sqrt(sum / array.length);
+		}
+
+		return standardDeviation;
+	}
+
+	public static double standardDeviation(List<Integer> list) {
+		double average = 0;
+		double standardDeviation = 0;
+
+		if (!list.isEmpty()) {
+			average = average(list);
+			double sum = 0;
+
+			for (int element : list) {
+				sum += Math.pow(element - average, 2);
+			}
+
+			standardDeviation = Math.sqrt(sum / list.size());
+		}
+
+		return standardDeviation;
+	}
+
+	public static double treeStandardDeviation(List<Integer> listTree) {
+		double average = 0;
+		double standardDeviation = 0;
+
+		if (!listTree.isEmpty()) {
+			average = treeAverage(listTree);
+			double sum = 0;
+
+			for (int element : listTree) {
+				sum += Math.pow(element - average, 2);
+			}
+
+			standardDeviation = Math.sqrt(sum / listTree.size());
+		}
+
+		return standardDeviation;
+
+	}
 
 	public static String[] permutations(String[] array) {
 		String[] finalArray = array.clone();

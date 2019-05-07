@@ -54,15 +54,18 @@ public class TreeUtils {
 	}
 
 	public static int sum(List<Integer> listTree) {
-		int sum = listTree.get(0);
-		int indexRight = 2;
-		int indexLeft = 1;
+		int sum = 0;
+		if (!listTree.isEmpty()) {
+			sum = listTree.get(0);
+			int indexRight = 2;
+			int indexLeft = 1;
 
-		if (indexRight <= listTree.size()) {
-			sum += TreeUtils.sum(TreeUtils.getRightTree(listTree));
-		}
-		if (indexLeft >= listTree.size()) {
-			sum += TreeUtils.sum(TreeUtils.getLeftTree(listTree));
+			if (indexRight <= listTree.size()) {
+				sum += TreeUtils.sum(TreeUtils.getRightTree(listTree));
+			}
+			if (indexLeft >= listTree.size()) {
+				sum += TreeUtils.sum(TreeUtils.getLeftTree(listTree));
+			}
 		}
 
 		return sum;
